@@ -28,13 +28,12 @@ module.exports = {
   },
   output: {
     path: __dirname + "/src/",
-    filename: "client.min.js"
+    filename: "client.min.js",
+    contentBase: './',
   },
   devServer: {
-    headers: { 
-       "Access-Control-Allow-Origin": "*",
-       "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-   }
+    historyApiFallback: true,
+    contentBase: './',
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),

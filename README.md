@@ -1,24 +1,52 @@
-# README
+# User Task Introduction
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The app is built by React and Ruby as a main core
+## Technologies index
+- **Docker, Docker-compose** based on Alpine Linux
+- **React, Redux** use for  Front-End
+- **Ruby on Rails** use for  Back-End
+- **Authentication** by cookie
+- **PostgreSQL** for Database
 
-Things you may want to cover:
+## Installation
 
-* Ruby version
+### Back-End
 
-* System dependencies
+```bash
+docker-compose build # build image
 
-* Configuration
+docker-compose run app bundle exec rails db:create # create database
 
-* Database creation
+docker-compose run app bundle exec rails db:migrate # migrate
 
-* Database initialization
+docker-compose up # check on http://localhost:3000/
+```
 
-* How to run the test suite
+### Front-End
+Because the front-end is not attached to the docker-compose yet so we have to run it manually
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+cd front-end # from the project directory
+npm install
+npm run dev # to start the server -> http://localhost:8080/
+```
 
-* Deployment instructions
+## Noted
+- Must run the app on **localhost:port** due to rack-cors settings
+- Must run db:create and db:migrate
+- Didn't apply memcached yet, user can remove this image for now
+- Run **bundle exec rspec** for basic model testing
 
-* ...
+
+
+## Todo
+- Apply memcached
+- Improve app performance
+- Refactor code, make it cleaner
+- Apply role and ability
+
+## Library Use in project
+- **Ruby**: rack-cors, unicorn
+- **React**: redux, react-redux, redux-form, react-router-dom, lodash, webpack
+
+## Thank You

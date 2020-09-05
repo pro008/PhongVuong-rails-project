@@ -1,8 +1,13 @@
 import { combineReducers } from "redux"
 
-import location_info from "./locationsReducer"
+import UserReducer from "./userReducer"
+import TaskReducer from "./taskReducer"
+import { reducer as formReducer } from 'redux-form'
+
 
 export default combineReducers({
-  location_info
+  UserReducer,
+  TaskReducer,
+  form: formReducer,
 })
   
