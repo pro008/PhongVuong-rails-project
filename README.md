@@ -24,6 +24,7 @@ docker-compose up # check on http://localhost:3000/
 
 ### Front-End
 Because the front-end is not attached to the docker-compose yet so we have to run it manually
+Because the config of rack-cors in app only allow localhost:8080 so coder need to follow the step below to make sure everything work well
 
 ```bash
 cd front-end # from the project directory
