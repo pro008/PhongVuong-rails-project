@@ -19,6 +19,8 @@ services:
   app:
     env_file: .env
     build: .
+    tty: true
+    stdin_open: true
     volumes:
       - .:/usr/src/app
       - /usr/src/app/front-end

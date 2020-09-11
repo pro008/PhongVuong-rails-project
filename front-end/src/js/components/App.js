@@ -9,6 +9,9 @@ import "./styles/main.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { userStatus, userLogout } from "../actions/userAction";
+
+import Header from "./layout/Header";
+import ProtectedRoute from "./layout/ProtectedRoute";
 import Home from "./Home";
 import Dashboard from "./Dashboard";
 
@@ -17,10 +20,30 @@ class App extends Component {
     super(props);
     this.state = {
       user: {},
+      user_status: "PENDING",
     };
 
     this.handleLogin = this.handleLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.loginStatus == "LOGOUT")
+      return{user: {}, user_status: "LOGOUT"}
+    else if (!_.isEmpty(props.user) || !_.isEmpty(state.user)){
+      return{
+        user: props.user,
+        user_status: "APPROVED"
+      }
+    } else if (props.loginStatus == "FAILED") {
+      return{ user_status: "REJECTED" }
+    }
+
+    return null;
+  }
+
+  componentDidMount(){
+    this.props.userStatus();
   }
 
   handleLogin(data){
@@ -31,18 +54,16 @@ class App extends Component {
 
   handleLogout(){
     this.props.userLogout();
-    this.setState({ user: {} })
-  }
-
-  componentDidMount(){
-    this.props.userStatus();
-    this.setState({ user: this.props.user })
   }
 
   render() {
     return (
       <div className="app">
         <Router>
+          <Header 
+            handleLogout={this.handleLogout}
+            user={this.state.user}
+          />
           <Switch>
             <Route 
               exact 
@@ -50,23 +71,19 @@ class App extends Component {
               render={props =>(
                 <Home {...props} 
                       handleLogin={this.handleLogin} 
-                      loggedInStatus={this.props.loginStatus}
-                      loaded_user={this.props.loaded_user}
+                      user_status={this.state.user_status}
                       user={this.state.user}
                 />
               )}
              />
-            <Route 
+
+            <ProtectedRoute 
               exact 
-              path={"/dashboard"} 
-              render={props =>(
-                <Dashboard {...props} 
-                            loggedInStatus={this.props.loginStatus}
-                            handleLogout={this.handleLogout}
-                            user={this.state.user}
-                            loaded_user={this.props.loaded_user}
-                />
-              )} />
+              path={"/dashboard"}
+              user_status={this.state.user_status}
+              user={this.state.user}
+              component={Dashboard}
+            />
           </Switch>
         </Router>
       </div>
@@ -77,7 +94,6 @@ function mapStateToProps(state, ownProps) {
   return {
     user: state.UserReducer.user,
     loginStatus: state.UserReducer.loginStatus,
-    loaded_user: state.UserReducer.checkUser
   };
 }
 

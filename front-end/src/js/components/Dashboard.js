@@ -14,7 +14,6 @@ class Dashboard extends Component {
     this.state = {
     };
 
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -22,11 +21,6 @@ class Dashboard extends Component {
     this.props.fetchTasks();
   }
 
-  componentDidUpdate(){
-   	if(_.isEmpty(this.props.user) && this.props.loaded_user){
-    	this.props.history.push("/");
-   	}
-  }
 
   handleLogoutClick(){
     this.props.handleLogout();
@@ -81,13 +75,6 @@ class Dashboard extends Component {
   	const { user, tasks } = this.props
     return (
       <div className="wrapper">
-      	<div className="navigation">
-      		<h3>Name: {_.isEmpty(user) ? '' : user.user_name}</h3>
-      		<button onClick={() => this.handleLogoutClick()}>Logout</button>
-      	</div>
-
-        <h1>Dashboard</h1>
-
         {this.taskContainer()}
 
         <TaskForm onSubmit={this.handleSubmit} />

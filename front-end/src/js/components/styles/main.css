@@ -1,3 +1,30 @@
+/*----Header---------- */
+.navbar{
+  background-color: #33b5e5;
+  z-index: 99;
+  margin-bottom:20px;
+}
+
+.right-navigation{
+  display: inline-flex;
+}
+
+.right-navigation h3{
+  margin-right:10px;
+}
+
+.navbar a, .navbar h3{
+  color:white !important;
+}
+
+.app{
+  background-color: #e9e9e9;
+  z-index: 1;
+  min-height: 100vh;
+}
+/*-------------------------------*/
+
+
 .btn{
   border-radius: 4px;
 }
@@ -15,6 +42,7 @@ span{
 }
 
 .registrationPage{
+  padding-top:40px;
   background-color: #e9e9e9;
 }
 

@@ -15,7 +15,7 @@ class Home extends Component {
   }
 
   componentDidUpdate(){
-     if(_.isEmpty(this.props.user) && this.props.loaded_user){
+     if(this.props.user_status === "APPROVED"){
       this.props.history.push("/dashboard");
      }
   }
